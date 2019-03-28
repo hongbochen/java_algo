@@ -36,7 +36,7 @@ public class MyArrayList<AnyType> implements Iterable<AnyType>{
     }
 
     public AnyType get(int idx){
-        if(idx == 0 || idx >= size())
+        if(idx < 0 || idx >= size())
             throw new ArrayIndexOutOfBoundsException();
         return theItems[idx];
     }

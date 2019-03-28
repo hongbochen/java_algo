@@ -59,7 +59,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 
     private T remove(Node<T> p){
         p.prev.next = p.next;
-        p.prev.prev = p.prev;
+        p.next.prev = p.prev;
         theSize--;
         modCount++;
 
@@ -79,7 +79,7 @@ public class MyLinkedList<T> implements Iterable<T>{
     }
 
     private Node<T> getNode(int idx){
-        return getNode(idx,0,size()-1);
+        return getNode(idx,0,size());
     }
 
     private Node<T> getNode(int idx,int lower,int upper){
@@ -116,6 +116,18 @@ public class MyLinkedList<T> implements Iterable<T>{
 
         theSize = 0;
         modCount++;
+    }
+
+    public boolean contains(T x){
+        if(x == null)
+            throw new NullPointerException();
+
+        for(Node<T> node = beginMaker; node.next != null;node = node.next){
+            if(node.data == x)
+                return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -157,5 +169,15 @@ public class MyLinkedList<T> implements Iterable<T>{
             expectedModCount++;
             okToRemove = false;
         }
+    }
+
+    public static void main(String [] args){
+        MyLinkedList<Integer> ll = new MyLinkedList<>();
+        ll.add(1);
+        ll.add(2);
+        ll.add(3);
+        ll.add(4);
+
+        System.out.print(ll.contains(5));
     }
 }

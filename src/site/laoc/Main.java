@@ -1,5 +1,6 @@
 package site.laoc;
 
+import site.laoc.practice.Practice_3_2_1;
 import site.laoc.queue.ArrayQueue;
 import site.laoc.queue.LinkedListQueue;
 import site.laoc.stack.stackExample.BalanceSym;
@@ -42,8 +43,6 @@ public class Main {
 //        queue.add(2);
 //        System.out.println(queue.remove());
 //        System.out.println(queue.remove());
-
-        LinkedList ll = new LinkedList();
 
     }
 }
