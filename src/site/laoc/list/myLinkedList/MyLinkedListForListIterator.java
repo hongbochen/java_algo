@@ -1,8 +1,10 @@
 package site.laoc.list.myLinkedList;
 
-import java.util.*;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class MyLinkedList<T> implements Iterable<T>{
+public class MyLinkedListForListIterator<T> implements Iterable<T>{
 
     private static class Node<T>{
 
@@ -22,7 +24,7 @@ public class MyLinkedList<T> implements Iterable<T>{
     private Node<T> beginMaker;
     private Node<T> endMarker;
 
-    public MyLinkedList(){
+    public MyLinkedListForListIterator(){
         doClear();
     }
 
@@ -189,7 +191,7 @@ public class MyLinkedList<T> implements Iterable<T>{
             if(!okToRemove)
                 throw new IllegalStateException();
 
-            MyLinkedList.this.remove(current.prev);
+            MyLinkedListForListIterator.this.remove(current.prev);
             expectedModCount++;
             okToRemove = false;
         }
@@ -197,7 +199,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 
     public static void main(String [] args){
 
-        MyLinkedList<Integer> ll = new MyLinkedList<>();
+        MyLinkedListForListIterator<Integer> ll = new MyLinkedListForListIterator<>();
         ll.add(1);
         ll.add(2);
         ll.add(3);
@@ -210,7 +212,7 @@ public class MyLinkedList<T> implements Iterable<T>{
 
         System.out.println();
 
-        MyLinkedList<Integer> ll1 = new MyLinkedList<>();
+        MyLinkedListForListIterator<Integer> ll1 = new MyLinkedListForListIterator<>();
         ll1.add(1);
         ll1.add(2);
         ll.removeAll(ll1);
