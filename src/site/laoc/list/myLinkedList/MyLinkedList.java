@@ -1,8 +1,6 @@
 package site.laoc.list.myLinkedList;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class MyLinkedList<T> implements Iterable<T>{
 
@@ -172,6 +170,8 @@ public class MyLinkedList<T> implements Iterable<T>{
     }
 
     public static void main(String [] args){
+        ArrayList li = new ArrayList();
+        li.removeAll()
         MyLinkedList<Integer> ll = new MyLinkedList<>();
         ll.add(1);
         ll.add(2);

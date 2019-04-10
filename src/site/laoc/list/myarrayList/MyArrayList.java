@@ -63,6 +63,14 @@ public class MyArrayList<AnyType> implements Iterable<AnyType>{
         }
     }
 
+    public void addAll(Iterable<? extends AnyType> items){
+        Iterator<? extends AnyType> its = items.iterator();
+
+        while(its.hasNext()){
+            add(its.next());
+        }
+    }
+
     public boolean add(AnyType x){
         add(size(),x);
         return true;
@@ -114,5 +122,21 @@ public class MyArrayList<AnyType> implements Iterable<AnyType>{
             MyArrayList.this.remove(--current);
         }
 
+    }
+
+    public static void main(String args[]){
+        MyArrayList<Integer> list = new MyArrayList<>();
+        list.add(1);
+        list.add(2);
+
+        MyArrayList<Integer> list1 = new MyArrayList<>();
+        list1.add(3);
+        list1.add(4);
+
+        list.addAll(list1);
+
+        for(int i = 0;i < list.size();i++){
+            System.out.print(list.get(i) + " ");
+        }
     }
 }
