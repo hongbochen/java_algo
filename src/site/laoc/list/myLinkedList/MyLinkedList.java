@@ -154,6 +154,22 @@ public class MyLinkedList<T> implements Iterable<T>{
         }
     }
 
+    public void print(){
+        Node<T> p = beginMaker;
+
+        while(p != endMarker){
+            p = p.next;
+            System.out.print(p.data + " ");
+        }
+
+        System.out.println();
+    }
+
+    public void splice(Iterator<T> itr,MyLinkedList<? extends T> lst){
+        Iterator<? extends T> ito = lst.iterator();
+
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new LinkedListIterator();
@@ -182,6 +198,18 @@ public class MyLinkedList<T> implements Iterable<T>{
             return nextItem;
         }
 
+        public Node<T> nextNode(){
+            if(modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+            if(!hasNext())
+                throw new NoSuchElementException();
+
+            Node<T> c = current;
+            current = current.next;
+            okToRemove = true;
+            return c;
+        }
+
         @Override
         public void remove() {
             if(modCount != expectedModCount)
@@ -197,27 +225,28 @@ public class MyLinkedList<T> implements Iterable<T>{
 
     public static void main(String [] args){
 
-        MyLinkedList<Integer> ll = new MyLinkedList<>();
-        ll.add(1);
-        ll.add(2);
-        ll.add(3);
-        ll.add(2);
-        ll.add(4);
+//        MyLinkedList<Integer> ll = new MyLinkedList<>();
+//        ll.add(1);
+//        ll.add(2);
+//        ll.add(3);
+//        ll.add(2);
+//        ll.add(4);
+//
+//        for(int i = 0;i < ll.size();i++){
+//            System.out.print(ll.get(i) + " ");
+//        }
+//
+//        System.out.println();
+//
+//        MyLinkedList<Integer> ll1 = new MyLinkedList<>();
+//        ll1.add(1);
+//        ll1.add(2);
+//        ll.removeAll(ll1);
+//
+//        for(int i = 0;i < ll.size();i++){
+//            System.out.print(ll.get(i) + " ");
+//        }
 
-        for(int i = 0;i < ll.size();i++){
-            System.out.print(ll.get(i) + " ");
-        }
-
-        System.out.println();
-
-        MyLinkedList<Integer> ll1 = new MyLinkedList<>();
-        ll1.add(1);
-        ll1.add(2);
-        ll.removeAll(ll1);
-
-        for(int i = 0;i < ll.size();i++){
-            System.out.print(ll.get(i) + " ");
-        }
-
+        LinkedList linkedList;
     }
 }
