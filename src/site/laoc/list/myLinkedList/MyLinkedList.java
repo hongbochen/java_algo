@@ -157,7 +157,7 @@ public class MyLinkedList<T> implements Iterable<T>{
     public void print(){
         Node<T> p = beginMaker;
 
-        while(p != endMarker){
+        while(p != endMarker.prev){
             p = p.next;
             System.out.print(p.data + " ");
         }
@@ -165,14 +165,51 @@ public class MyLinkedList<T> implements Iterable<T>{
         System.out.println();
     }
 
-    public void splice(Iterator<T> itr,MyLinkedList<? extends T> lst){
-        Iterator<? extends T> ito = lst.iterator();
 
-    }
 
     @Override
     public Iterator<T> iterator() {
         return new LinkedListIterator();
+    }
+
+    public Iterator<T> reverseIterator() {
+        return new LinkedListReverseIterator();
+    }
+
+    private class LinkedListReverseIterator implements Iterator<T>{
+        private Node<T> current = endMarker.prev;
+        private int expectedModCount = modCount;
+        private boolean okToRemove = false;
+
+        @Override
+        public boolean hasNext() {
+            return current != beginMaker;
+        }
+
+        @Override
+        public T next() {
+            if(modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+            if(!hasNext())
+                throw new NoSuchElementException();
+
+            T nextItem = current.data;
+            current = current.prev;
+            okToRemove = true;
+            return nextItem;
+        }
+
+        @Override
+        public void remove() {
+            if(modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+            if(!okToRemove)
+                throw new IllegalStateException();
+
+            MyLinkedList.this.remove(current.next);
+            expectedModCount++;
+            okToRemove = false;
+        }
     }
 
     private class LinkedListIterator implements Iterator<T>{
@@ -247,6 +284,16 @@ public class MyLinkedList<T> implements Iterable<T>{
 //            System.out.print(ll.get(i) + " ");
 //        }
 
-        LinkedList linkedList;
+        MyLinkedList<Integer> ll = new MyLinkedList<>();
+        ll.add(1);
+        ll.add(2);
+        ll.add(3);
+        ll.print();
+
+        Iterator<Integer> ito = ll.reverseIterator();
+        while(ito.hasNext()){
+
+            System.out.print(ito.next() + " ");
+        }
     }
 }
