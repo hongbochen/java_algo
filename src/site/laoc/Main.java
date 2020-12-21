@@ -1,16 +1,5 @@
 package site.laoc;
 
-import site.laoc.practice.Practice_3_2_1;
-import site.laoc.queue.ArrayQueue;
-import site.laoc.queue.LinkedListQueue;
-import site.laoc.stack.stackExample.BalanceSym;
-import site.laoc.stack.stackExample.MedCal;
-import site.laoc.stack.stackExample.MedToBack;
-import site.laoc.stack.stackImpl.LinkedListStack;
-
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class Main {
 
     public static void main(String[] args) {
