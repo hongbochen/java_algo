@@ -6,10 +6,7 @@ package site.laoc.practice.practice_3;
  */
 
 import site.laoc.list.myLinkedList.MyLinkedList;
-
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * 优点：
@@ -39,13 +36,14 @@ public class Practice_3_20<T> {
     private Node<T> endMarker;
 
     private int deled = 0;      // 被删除的元素的个数
+    private int nodeled = 0;    // 未被删除的元素
 
     public Practice_3_20(){
         doClear();
     }
 
     public int size(){
-        return this.theSize;
+        return this.nodeled;
     }
 
     public boolean isEmpty(){
@@ -53,7 +51,7 @@ public class Practice_3_20<T> {
     }
 
     public boolean add(T x){
-        add(size(),x);
+        add(theSize,x);
         return true;
     }
 
@@ -81,17 +79,17 @@ public class Practice_3_20<T> {
      */
     private T remove(Node<T> p){
         p.del = 1;
-        theSize--;
         deled++;
+        nodeled--;
 
-        if(theSize == deled){
+        if(nodeled <= deled){
             // 删除所有被标记的元素
             Node<T> node = beginMaker;
             while(node.next != endMarker){
-                Node<T> nd = node.next;
+                node = node.next;
 
-                if(nd.del == 1){
-                    removeMarkDeled(nd);
+                if(node.del == 1){
+                    removeMarkDeled(node);
                 }
             }
         }
@@ -104,6 +102,7 @@ public class Practice_3_20<T> {
         p.next.prev = p.prev;
         modCount++;
         deled--;
+        theSize--;
 
         return p.data;
     }
@@ -126,37 +125,38 @@ public class Practice_3_20<T> {
     }
 
     public void add(int idx,T x){
-        addBefore(getNode(idx, 0, size()),x);
+        addBefore(getNode(idx),x);
     }
 
     private void addBefore(Node<T> p, T x){
         Node<T> newNode = new Node<>(x,p.prev,p);
+        newNode.del = 0;
         p.prev.next = newNode;
         p.prev = newNode;
         theSize++;
+        nodeled++;
         modCount++;
     }
 
     private Node<T> getNode(int idx){
-        return getNode(idx,0,size());
-    }
 
-    private Node<T> getNode(int idx, int lower, int upper){
-        Node<T> p;
 
-        if(idx < lower || idx > upper){
+        if(idx < 0 || idx > size()){
             throw new IndexOutOfBoundsException();
         }
 
-        if(idx < size() / 2){
-            p = beginMaker.next;
-            for(int i = 0;i < idx;i++){
-                p = p.next;
+        Node<T> p = beginMaker;
+
+        int index = -1;
+        while(p.next != null){
+            p = p.next;
+
+            if(p.del == 0){
+                index++;
             }
-        }else{
-            p = endMarker;
-            for(int i = size();i > idx;i--){
-                p = p.prev;
+
+            if(index == idx){
+                break;
             }
         }
 
@@ -175,6 +175,7 @@ public class Practice_3_20<T> {
 
         theSize = 0;
         deled = 0;
+        nodeled = 0;
         modCount++;
     }
 
@@ -204,7 +205,7 @@ public class Practice_3_20<T> {
 
         while(p != endMarker.prev){
             p = p.next;
-            System.out.print(p.data + " ");
+            System.out.print("(" + p.data + "," + p.del + ") ");
         }
 
         System.out.println();
@@ -213,38 +214,24 @@ public class Practice_3_20<T> {
 
     public static void main(String [] args){
 
-//        MyLinkedList<Integer> ll = new MyLinkedList<>();
-//        ll.add(1);
-//        ll.add(2);
-//        ll.add(3);
-//        ll.add(2);
-//        ll.add(4);
+        Practice_3_20 list = new Practice_3_20();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        list.add(7);
+        System.out.println(list.size());
+        list.print();
 //
-//        for(int i = 0;i < ll.size();i++){
-//            System.out.print(ll.get(i) + " ");
-//        }
-//
-//        System.out.println();
-//
-//        MyLinkedList<Integer> ll1 = new MyLinkedList<>();
-//        ll1.add(1);
-//        ll1.add(2);
-//        ll.removeAll(ll1);
-//
-//        for(int i = 0;i < ll.size();i++){
-//            System.out.print(ll.get(i) + " ");
-//        }
-
-        MyLinkedList<Integer> ll = new MyLinkedList<>();
-        ll.add(1);
-        ll.add(2);
-        ll.add(3);
-        ll.print();
-
-        Iterator<Integer> ito = ll.reverseIterator();
-        while(ito.hasNext()){
-
-            System.out.print(ito.next() + " ");
-        }
+        list.remove(0);
+        list.print();
+        list.remove(0);
+        list.print();
+        list.remove(0);
+        list.print();
+        list.remove(0);
+        list.print();
     }
 }
