@@ -77,4 +77,12 @@ public class ArrayStack<T> {
             theItems[i] = old[i];
         }
     }
+
+    public void print(){
+        for(int i = 0;i < theSize;i++){
+            System.out.print(theItems[i] + " ");
+        }
+
+        System.out.println();
+    }
 }

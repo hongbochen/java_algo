@@ -1,21 +1,11 @@
-package site.laoc.stack.stackExample;
+package site.laoc.practice.practice_3;
 
 import site.laoc.stack.stackImpl.LinkedListStack;
 
-/**
- * 中缀表达式转后缀表达式（逆波兰）
- * 1：从左向右遍历中缀表达式
- * 2：如果是数，则输出
- * 3：如果是运算符，判断与栈顶符号的优先级
- * 4：如果当前符号比栈顶的运算符的优先级高，则该符号入栈
- * 5：如果当前符号比栈顶的运算符的优先级低，则栈内元素出栈，输出；接着进行判断运算符与栈顶元素；最后，该运算符入栈
- * 6：当前符号为右括号的时候，栈内元素一直出栈，一直到左括号。
- * 7：当中缀表达式遍历完成之后，将栈内元素全部输出
- */
-public class MedToBack {
-
+// 中缀表达式转后缀表达式，
+public class Practice_3_23_b {
     private boolean isSym(char c){
-        if(c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')')
+        if(c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '^')
             return true;
         return false;
     }
@@ -25,11 +15,11 @@ public class MedToBack {
             return true;
         }
 
-        if((b == '*' || b == '/') && (a == '(')){
+        if((b == '*' || b == '/' || b == '^') && (a == '(')){
             return true;
         }
 
-        if((b == '*' || b == '/') && (a == '*' || a == '/')){
+        if((b == '*' || b == '/' || b == '^') && (a == '*' || a == '/' || a == '^')){
             return true;
         }
 
@@ -69,5 +59,10 @@ public class MedToBack {
             System.out.print(ls.pop() + " ");
         }
     }
-}
 
+    public static void main(String args[]){
+        Practice_3_23_b p = new Practice_3_23_b();
+        p.medToBack("1+(2^2+3)*4-5");
+    }
+
+}

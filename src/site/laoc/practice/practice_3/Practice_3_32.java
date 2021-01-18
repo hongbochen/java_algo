@@ -2,17 +2,13 @@ package site.laoc.practice.practice_3;
 
 import java.util.NoSuchElementException;
 
-/**
- * 使用单链表高效实现栈类，不用头节点和尾节点
- * @param <T>
- */
-public class Practice_3_31<T> {
+public class Practice_3_32<T> {
 
     class Node<T>{
         T x;
         Node<T> next;
 
-        public Node(T x, Node<T> next){
+        public Node(T x,Node<T> next){
             this.x = x;
             this.next = next;
         }
@@ -21,12 +17,13 @@ public class Practice_3_31<T> {
     private int theSize;
     private Node<T> curNode;
 
-    public Practice_3_31(){
+    public Practice_3_32(){
         doClear();
     }
 
     private void doClear(){
         theSize = 0;
+        curNode = null;
     }
 
     public int size(){
@@ -38,12 +35,10 @@ public class Practice_3_31<T> {
     }
 
     public void push(T x){
-        Node<T> node = new Node<>(x,null);
-
         if(curNode == null){
-            curNode = node;
+            curNode = new Node<>(x,null);
         }else{
-            node.next = curNode;
+            Node<T> node = new Node<>(x,curNode);
             curNode = node;
         }
 
@@ -54,24 +49,29 @@ public class Practice_3_31<T> {
         if(size() == 0)
             throw new NoSuchElementException();
 
+        Node<T> preNode = null;
         Node<T> node = curNode;
-        curNode = node.next;
 
-        node.next = null;
+        while(node.next != null){
+            preNode = node;
+            node = node.next;
+        }
+
+        preNode.next = null;
         theSize--;
         return node.x;
     }
 
     public static void main(String[] args){
-        Practice_3_31<Integer> practice_3_31 = new Practice_3_31<>();
-        practice_3_31.push(1);
-        practice_3_31.push(2);
-        practice_3_31.push(3);
-        practice_3_31.push(4);
+        Practice_3_32<Integer> practice_3_32 = new Practice_3_32<>();
+        practice_3_32.push(1);
+        practice_3_32.push(2);
+        practice_3_32.push(3);
+        practice_3_32.push(4);
+        practice_3_32.push(5);
 
-        System.out.println(practice_3_31.pop());
-        System.out.println(practice_3_31.pop());
-        System.out.println(practice_3_31.pop());
-        System.out.println(practice_3_31.pop());
+        System.out.println(practice_3_32.pop());
+        System.out.println(practice_3_32.pop());
+        System.out.println(practice_3_32.pop());
     }
 }
