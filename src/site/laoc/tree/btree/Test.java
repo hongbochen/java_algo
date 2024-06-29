@@ -14,5 +14,21 @@ public class Test {
         Entry entry = tree.searchEntry(16);
         System.out.println("查询键16：" + entry.getValue());
 
+        System.out.println("----------------------删除键15");
+        tree.remove(15);
+        System.out.println(JSONObject.toJSONString(tree));
+
+        System.out.println("----------------------删除键14");
+        tree.remove(14);
+        System.out.println(JSONObject.toJSONString(tree));
+
+        System.out.println("----------------------删除键17");
+        tree.remove(17);
+        System.out.println(JSONObject.toJSONString(tree));
+
+        System.out.println("----------------------删除键5");
+        tree.remove(5);
+        System.out.println(JSONObject.toJSONString(tree));
+
     }
 }
